@@ -145,7 +145,7 @@ def _build_parser(**kwargs):
     is_release = not any((currentv.is_devrelease, currentv.is_prerelease, currentv.is_postrelease))
 
     parser = ArgumentParser(
-        description=f"{verstr}: q-Space Image Preprocessing workflows",
+        description=f"{verstr}: q-Space Image Postprocessing workflows",
         formatter_class=ArgumentDefaultsHelpFormatter,
         **kwargs,
     )
@@ -762,9 +762,6 @@ def parse_args(args=None, namespace=None):
 
     if config.execution.qsipost_dir is None:
         config.execution.qsipost_dir = output_dir / "qsipost"
-
-    if config.execution.qsirecon_dir is None:
-        config.execution.qsirecon_dir = output_dir / "qsirecon"
 
     if config.execution.reportlets_dir is None:
         config.execution.reportlets_dir = work_dir / "reportlets"
