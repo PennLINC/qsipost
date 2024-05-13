@@ -9,8 +9,8 @@ update an existing environment, as necessary.
 
 Development in Docker is encouraged, for the sake of consistency and
 portability.
-By default, work should be built off of `pennbbl/qsipost:latest
-<https://hub.docker.com/r/pennbbl/qsipost/>`_ (see the
+By default, work should be built off of `pennlinc/qsipost:latest
+<https://hub.docker.com/r/pennlinc/qsipost/>`_ (see the
 installation_ guide for the basic procedure for running).
 
 
@@ -30,7 +30,7 @@ For instance, if your repositories are contained in ``$HOME/projects``::
 
     $ qsipost-docker -f $HOME/projects/qsipost/qsipost \
                       -p $HOME/projects/nipype/nipype \
-                      -i pennbbl/qsipost:latest \
+                      -i pennlinc/qsipost:latest \
                       $HOME/fullds005 $HOME/dockerout participant
 
 Note the ``-i`` flag allows you to specify an image.
@@ -45,7 +45,7 @@ For example, ::
 
     $ docker run --rm -v $HOME/fullds005:/data:ro -v $HOME/dockerout:/out \
         -v $HOME/projects/qsipost/qsipost:/usr/local/miniconda/lib/python3.10/site-packages/qsipost:ro \
-        pennbbl/qsipost:latest /data /out/out participant \
+        pennlinc/qsipost:latest /data /out/out participant \
         -w /out/work/
 
 In order to work directly in the container, pass the ``--shell`` flag to
@@ -58,7 +58,7 @@ arguments in a ``docker`` command::
 
     $ docker run --rm -v $HOME/fullds005:/data:ro -v $HOME/dockerout:/out \
         -v $HOME/projects/qsipost/qsipost:/usr/local/miniconda/lib/python3.10/site-packages/qsipost:ro --entrypoint=bash \
-        pennbbl/qsipost:latest
+        pennlinc/qsipost:latest
 
 Patching containers can be achieved in Singularity analogous to ``docker``
 using the ``--bind`` (``-B``) option: ::
@@ -85,14 +85,14 @@ dependency changes.
 
 Python dependencies should generally be included in the ``REQUIRES``
 list in `qsipost/info.py
-<https://github.com/pennbbl/qsipost/blob/29133e5e9f92aae4b23dd897f9733885a60be311/qsipost/info.py#L46-L61>`_.
+<https://github.com/pennlinc/qsipost/blob/29133e5e9f92aae4b23dd897f9733885a60be311/qsipost/info.py#L46-L61>`_.
 If the latest version in `PyPI <https://pypi.org/>`_ is sufficient,
 then no further action is required.
 
 For large Python dependencies where there will be a benefit to
 pre-compiled binaries, `conda <https://github.com/conda/conda>`_ packages
 may also be added to the ``conda install`` line in the `Dockerfile
-<https://github.com/pennbbl/qsipost/blob/29133e5e9f92aae4b23dd897f9733885a60be311/Dockerfile#L46>`_.
+<https://github.com/pennlinc/qsipost/blob/29133e5e9f92aae4b23dd897f9733885a60be311/Dockerfile#L46>`_.
 
 Non-Python dependencies must also be installed in the Dockerfile, via a
 ``RUN`` command.
@@ -109,7 +109,7 @@ repository, located in ``~/projects/qsipost``: ::
 
     ~/projects/qsipost$ docker build -t qsipost .
 
-To work in this image, replace ``pennbbl/qsipost:latest`` with
+To work in this image, replace ``pennlinc/qsipost:latest`` with
 ``qsipost`` in any of the above commands.
 This image may be accessed by the ``qsipost-docker`` wrapper via the
 ``-i`` flag, e.g. ::

@@ -112,7 +112,7 @@ def main():
     if config.execution.boilerplate_only:
         sys.exit(int(exitcode > 0))
 
-    # Clean up master process before running workflow, which may create forks
+    # Clean up main process before running workflow, which may create forks
     gc.collect()
 
     # Sentry tracking
@@ -256,7 +256,7 @@ def main():
     if config.execution.boilerplate_only:
         sys.exit(int(exitcode > 0))
 
-    # Clean up master process before running workflow, which may create forks
+    # Clean up main process before running workflow, which may create forks
     gc.collect()
 
     # Sentry tracking

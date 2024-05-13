@@ -80,4 +80,4 @@ Support and communication
 The documentation of this project is found here: http://qsipost.readthedocs.org/en/latest/.
 
 All bugs, concerns and enhancement requests for this software can be submitted here:
-https://github.com/pennbbl/qsipost/issues.
+https://github.com/pennlinc/qsipost/issues.

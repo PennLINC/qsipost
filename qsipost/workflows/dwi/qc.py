@@ -177,7 +177,7 @@ def init_mask_overlap_wf(name="mask_overlap_wf"):
     workflow.connect([
         (inputnode, downsample_t1_mask, [
             ('anatomical_mask', 'in_file'),
-            ('dwi_mask', 'master')]),
+            ('dwi_mask', 'main')]),
         (inputnode, calculate_dice, [('dwi_mask', 'dwi_mask')]),
         (downsample_t1_mask, calculate_dice, [('out_file', 'anatomical_mask')]),
         (calculate_dice, outputnode, [('dice_score', 'dice_score')])

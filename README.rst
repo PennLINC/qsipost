@@ -11,12 +11,12 @@ QSIPost: Preprocessing and analysis of q-space images
   :target: http://qsipost.readthedocs.io/en/latest/?badge=latest
   :alt: Documentation Status
 
-.. image:: https://img.shields.io/badge/docker-pennbbl/qsipost-brightgreen.svg?logo=docker&style=flat
-  :target: https://hub.docker.com/r/pennbbl/qsipost/tags/
+.. image:: https://img.shields.io/badge/docker-pennlinc/qsipost-brightgreen.svg?logo=docker&style=flat
+  :target: https://hub.docker.com/r/pennlinc/qsipost/tags/
   :alt: Docker
 
-.. image:: https://circleci.com/gh/PennLINC/qsipost/tree/master.svg?style=svg
-  :target: https://circleci.com/gh/PennLINC/qsipost/tree/master
+.. image:: https://circleci.com/gh/PennLINC/qsipost/tree/main.svg?style=svg
+  :target: https://circleci.com/gh/PennLINC/qsipost/tree/main
   :alt: Test Status
 
 .. image:: https://img.shields.io/badge/Nature%20Methods-10.1038%2Fs41592--021--01185--5-purple
@@ -44,7 +44,7 @@ The main features of this software are
      from Dipy_, MRTrix_, `DSI Studio`_  and others.
   4. A novel motion correction algorithm that works on DSI and random q-space sampling schemes
 
-.. image:: https://github.com/PennBBL/qsipost/raw/master/docs/_static/workflow_full.png
+.. image:: https://github.com/pennlinc/qsipost/raw/main/docs/_static/workflow_full.png
 
 
 .. _preprocessing_def:

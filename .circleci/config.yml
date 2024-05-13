@@ -2,7 +2,7 @@ version: 2.1
 
 .dockersetup: &dockersetup
   docker:
-    - image: pennbbl/qsipost_build:24.4.29
+    - image: pennlinc/qsipost_build:24.4.29
   working_directory: /src/qsipost
 
 runinstall: &runinstall
@@ -323,9 +323,9 @@ jobs:
             # Build docker image
             e=1 && for i in {1..5}; do
               docker build \
-                --cache-from=pennbbl/qsipost \
+                --cache-from=pennlinc/qsipost \
                 --rm=false \
-                -t pennbbl/qsipost:latest \
+                -t pennlinc/qsipost:latest \
                 --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
                 --build-arg VCS_REF=`git rev-parse --short HEAD` \
                 --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" . \
@@ -337,12 +337,12 @@ jobs:
           command: |
             if [[ -n "$DOCKER_PASS" ]]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
-              docker tag pennbbl/qsipost pennbbl/qsipost:unstable
-              docker push pennbbl/qsipost:unstable
+              docker tag pennlinc/qsipost pennlinc/qsipost:unstable
+              docker push pennlinc/qsipost:unstable
               if [[ -n "$CIRCLE_TAG" ]]; then
-                docker push pennbbl/qsipost:latest
-                docker tag pennbbl/qsipost pennbbl/qsipost:$CIRCLE_TAG
-                docker push pennbbl/qsipost:$CIRCLE_TAG
+                docker push pennlinc/qsipost:latest
+                docker tag pennlinc/qsipost pennlinc/qsipost:$CIRCLE_TAG
+                docker push pennlinc/qsipost:$CIRCLE_TAG
               fi
             fi
 
@@ -531,7 +531,7 @@ workflows:
             - Recon_ScalarMap
           filters:
             branches:
-              only: master
+              only: main
             tags:
               only: /.*/
 
@@ -540,6 +540,6 @@ workflows:
             - deployable
           filters:
             branches:
-              only: master
+              only: main
             tags:
               only: /.*/

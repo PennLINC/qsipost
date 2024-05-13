@@ -146,7 +146,7 @@ logging.addLevelName(15, "VERBOSE")  # Add a new level between INFO and DEBUG
 DEFAULT_MEMORY_MIN_GB = 0.01
 
 # Ping NiPype eTelemetry once if env var was not set
-# workers on the pool will have the env variable set from the master process
+# workers on the pool will have the env variable set from the main process
 if not _disable_et:
     # Just get so analytics track one hit
     from contextlib import suppress
@@ -691,8 +691,8 @@ class seeds(_Config):
     """Initialize the PRNG and track random seed assignments"""
 
     _random_seed = None
-    master = None
-    """Master random seed to initialize the Pseudorandom Number Generator (PRNG)"""
+    main = None
+    """main random seed to initialize the Pseudorandom Number Generator (PRNG)"""
     ants = None
     """Seed used for antsRegistration, antsAI, antsMotionCorr"""
     numpy = None
@@ -701,10 +701,10 @@ class seeds(_Config):
     @classmethod
     def init(cls):
         if cls._random_seed is not None:
-            cls.master = cls._random_seed
-        if cls.master is None:
-            cls.master = random.randint(1, 65536)
-        random.seed(cls.master)  # initialize the PRNG
+            cls.main = cls._random_seed
+        if cls.main is None:
+            cls.main = random.randint(1, 65536)
+        random.seed(cls.main)  # initialize the PRNG
         # functions to set program specific seeds
         cls.ants = _set_ants_seed()
         cls.numpy = _set_numpy_seed()

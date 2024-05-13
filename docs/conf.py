@@ -14,7 +14,7 @@
 
 # Notes on QSIPost-specific style:
 # 1. For rst headings, we use the following convention, based on
-#    https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#sections:
+#    https://www.sphinx-doc.org/en/main/usage/restructuredtext/basics.html#sections:
 #        # with overline, for parts
 #        * with overline, for chapters
 #        = for sections
@@ -89,8 +89,8 @@ source_suffix = [".rst", ".md"]
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
 
-# The master toctree document.
-master_doc = "index"
+# The main toctree document.
+main_doc = "index"
 
 # General information about the project.
 project = "qsipost"
@@ -307,7 +307,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, "qsipost.tex", "qsipost Documentation", author, "manual"),
+    (main_doc, "qsipost.tex", "qsipost Documentation", author, "manual"),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -335,7 +335,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "qsipost", "qsipost Documentation", [author], 1)]
+man_pages = [(main_doc, "qsipost", "qsipost Documentation", [author], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
@@ -348,7 +348,7 @@ man_pages = [(master_doc, "qsipost", "qsipost Documentation", [author], 1)]
 #  dir menu entry, description, category)
 texinfo_documents = [
     (
-        master_doc,
+        main_doc,
         "qsipost",
         "qsipost Documentation",
         author,

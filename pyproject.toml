@@ -6,7 +6,7 @@ build-backend = "hatchling.build"
 name = "qsipost"
 description = "qsipost builds workflows for preprocessing and reconstructing q-space images"
 readme = "long_description.rst"
-authors = [{name = "The PennBBL developers"}]
+authors = [{name = "The pennlinc developers"}]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Science/Research",
@@ -48,7 +48,7 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/pennbbl/qsipost"
+Homepage = "https://github.com/pennlinc/qsipost"
 Documentation = "https://www.qsipost.readthedocs.io"
 Paper = "https://doi.org/10.1038/s41592-022-01458-7"
 "Docker Images" = "https://hub.docker.com/r/pennlinc/qsipost/tags/"

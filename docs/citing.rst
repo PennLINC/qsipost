@@ -21,8 +21,8 @@ Citing qsipost
                  doi:`10.1002/mrm.1910340111 <https://doi.org/10.1002/mrm.1910340111>`_.
 
 .. [Huntenburg2014] Huntenburg, J. M. (2014) Evaluating Nonlinear
-                    Coregistration of BOLD EPI and T1w Images. Berlin: Master
-                    Thesis, Freie Universität. `PDF <http://pubman.mpdl.mpg.de/pubman/item/escidoc:2327525:5/component/escidoc:2327523/master_thesis_huntenburg_4686947.pdf>`_.
+                    Coregistration of BOLD EPI and T1w Images. Berlin: main
+                    Thesis, Freie Universität. `PDF <http://pubman.mpdl.mpg.de/pubman/item/escidoc:2327525:5/component/escidoc:2327523/main_thesis_huntenburg_4686947.pdf>`_.
 
 .. [Treiber2016] Treiber, J. M. et al. (2016) Characterization and Correction
                  of Geometric Distortions in 814 Diffusion Weighted Images,

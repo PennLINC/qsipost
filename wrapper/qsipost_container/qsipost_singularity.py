@@ -9,7 +9,7 @@ This is the preferred method for HPCs. For example ::
   singularity run --cleanenv -B /data/:/home/$user/data qsipost-<version>.simg
 
 Please report any feedback to our GitHub repository
-(https://github.com/pennbbl/qsipost) and do not
+(https://github.com/pennlinc/qsipost) and do not
 forget to credit all the authors of software that qsipost
 uses (https://qsipost.readthedocs.io/en/latest/citing.html).
 """
@@ -27,8 +27,8 @@ __credits__ = []
 __license__ = "3-clause BSD"
 __maintainer__ = ""
 __email__ = ""
-__url__ = "https://github.com/pennbbl/qsipost"
-__bugreports__ = "https://github.com/pennbbl/qsipost/issues"
+__url__ = "https://github.com/pennlinc/qsipost"
+__bugreports__ = "https://github.com/pennlinc/qsipost/issues"
 
 __description__ = """\
 qsipost is a non-DTI diffusion-weighted image pre-processing pipeline \
@@ -365,7 +365,7 @@ def main():
             return 0
         print("Downloading and building image. This may take a while...")
         ret = subprocess.run(
-            "singularity build {} docker://pennbbl/qsipost:latest".format(opts.image)
+            "singularity build {} docker://pennlinc/qsipost:latest".format(opts.image)
         )
         if ret > 0:
             print("Critical Error: Unable to create singularity image {}".format(opts.image))

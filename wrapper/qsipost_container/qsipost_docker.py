@@ -10,7 +10,7 @@ running ::
   docker info
 
 Please report any feedback to our GitHub repository
-(https://github.com/pennbbl/qsipost) and do not
+(https://github.com/pennlinc/qsipost) and do not
 forget to credit all the authors of software that qsipost
 uses (https://qsipost.readthedocs.io/en/latest/citing.html).
 """
@@ -27,8 +27,8 @@ __credits__ = []
 __license__ = "3-clause BSD"
 __maintainer__ = ""
 __email__ = ""
-__url__ = "https://github.com/pennbbl/qsipost"
-__bugreports__ = "https://github.com/pennbbl/qsipost/issues"
+__url__ = "https://github.com/pennlinc/qsipost"
+__bugreports__ = "https://github.com/pennlinc/qsipost/issues"
 
 __description__ = """\
 qsipost is a non-DTI diffusion-weighted image pre-processing pipeline \
@@ -273,7 +273,7 @@ def get_parser():
         "--image",
         metavar="IMG",
         type=str,
-        default="pennbbl/qsipost:{}".format(__version__),
+        default="pennlinc/qsipost:{}".format(__version__),
         help="image name",
     )
 

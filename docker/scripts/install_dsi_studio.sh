@@ -15,9 +15,9 @@ apt-get install -y --no-install-recommends \
                 mesa-utils
 
 cd /opt/dsistudio
-git clone -b master https://github.com/frankyeh/DSI-Studio.git src
-curl -sSLO https://github.com/frankyeh/TIPL/zipball > master.zip
-unzip master.zip
+git clone -b main https://github.com/frankyeh/DSI-Studio.git src
+curl -sSLO https://github.com/frankyeh/TIPL/zipball > main.zip
+unzip main.zip
 mv frankyeh-TIPL-* src/image
 mkdir build
 cd build

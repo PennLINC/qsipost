@@ -77,7 +77,7 @@ of the file you will send to ``--bids-filter-file``. The queries in QSIPost are:
 
 Each query has several "entities", which can be modified by filters. The list of
 supported entities is `here
-<https://github.com/bids-standard/pybids/blob/master/bids/layout/config/bids.json>`__.
+<https://github.com/bids-standard/pybids/blob/main/bids/layout/config/bids.json>`__.
 To filter data, modify the queries by changing one or more of the supported
 entities in the BIDS filter file. The general format of the filter file is::
 
@@ -672,7 +672,7 @@ Configuring ``eddy``
 options, you can specify them in a JSON file and pass that to ``qsipost``
 using the ``--eddy-config`` option. An example (default) eddy config json can
 be viewed or downloaded `here
-<https://github.com/PennBBL/qsipost/blob/master/qsipost/data/eddy_params.json>`__
+<https://github.com/pennlinc/qsipost/blob/main/qsipost/data/eddy_params.json>`__
 
 
 

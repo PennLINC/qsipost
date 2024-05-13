@@ -389,7 +389,7 @@ def grow_mask(anat, aseg, ants_segs=None, ww=7, zval=2.0, bw=4):
     GM tissue parameters are sampled in image patches of ``ww`` size.
 
     This is inspired on mindboggle's solution to the problem:
-    https://github.com/nipy/mindboggle/blob/master/mindboggle/guts/segment.py#L1660
+    https://github.com/nipy/mindboggle/blob/main/mindboggle/guts/segment.py#L1660
 
     """
     selem = sim.ball(bw)

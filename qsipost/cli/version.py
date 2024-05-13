@@ -66,12 +66,12 @@ def check_latest():
 
 def is_flagged():
     """Check whether current version is flagged."""
-    # https://raw.githubusercontent.com/pennbbl/qsipost/master/.versions.json
+    # https://raw.githubusercontent.com/pennlinc/qsipost/main/.versions.json
     flagged = tuple()
     try:
         response = requests.get(
             url="""\
-https://raw.githubusercontent.com/pennbbl/qsipost/master/.versions.json""",
+https://raw.githubusercontent.com/pennlinc/qsipost/main/.versions.json""",
             timeout=1.0,
         )
     except Exception:

@@ -7,7 +7,7 @@ RUN apt-get update && \
 COPY . /src/qsipost
 RUN python -m build /src/qsipost
 
-FROM pennbbl/qsipost_build:24.4.29
+FROM pennlinc/qsipost_build:24.4.29
 
 # Install qsipost wheel
 COPY --from=wheelstage /src/qsipost/dist/*.whl .
@@ -31,6 +31,6 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.description="qsipost - q Space Images preprocessing tool" \
       org.label-schema.url="http://qsipost.readthedocs.io" \
       org.label-schema.vcs-ref=$VCS_REF \
-      org.label-schema.vcs-url="https://github.com/pennbbl/qsipost" \
+      org.label-schema.vcs-url="https://github.com/pennlinc/qsipost" \
       org.label-schema.version=$VERSION \
       org.label-schema.schema-version="1.0"
