@@ -22,7 +22,7 @@ from pkg_resources import resource_filename as pkgrf
 
 from ... import config
 from ...engine import Workflow
-from ...interfaces.anatomical import QsiprepAnatomicalIngress, UKBAnatomicalIngress
+from ...interfaces.anatomical import QSIPostAnatomicalIngress, UKBAnatomicalIngress
 from ...interfaces.ants import ConvertTransformFile
 from ...interfaces.bids import ReconDerivativesDataSink
 from ...interfaces.freesurfer import find_fs_path
@@ -51,12 +51,12 @@ HSV_REQUIREMENTS = [
 UKB_REQUIREMENTS = ["T1/T1_brain.nii.gz", "T1/T1_brain_mask.nii.gz"]
 
 # Files that must exist if QSIPost ran the anatomical workflow
-QSIPREP_ANAT_REQUIREMENTS = [
+QSIPOST_ANAT_REQUIREMENTS = [
     "sub-{subject_id}/anat/sub-{subject_id}_desc-brain_mask.nii.gz",
     "sub-{subject_id}/anat/sub-{subject_id}_desc-preproc_T1w.nii.gz",
 ]
 
-QSIPREP_NORMALIZED_ANAT_REQUIREMENTS = [
+QSIPOST_NORMALIZED_ANAT_REQUIREMENTS = [
     "sub-{subject_id}/anat/sub-{subject_id}_from-T1w_to-MNI152NLin2009cAsym_mode-image_xfm.h5",
     "sub-{subject_id}/anat/sub-{subject_id}_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5",
 ]
@@ -263,7 +263,7 @@ def gather_qsipost_anatomical_data(subject_id):
     else:
         config.loggers.workflow.info("Found usable QSIPost-preprocessed T1w image and mask.")
     anat_ingress = pe.Node(
-        QsiprepAnatomicalIngress(subject_id=subject_id, recon_input_dir=recon_input_dir),
+        QSIPostAnatomicalIngress(subject_id=subject_id, recon_input_dir=recon_input_dir),
         name="qsipost_anat_ingress",
     )
 
@@ -319,7 +319,7 @@ def check_qsipost_anatomical_outputs(recon_input_dir, subject_id, anat_type):
     missing = []
     recon_input_path = Path(recon_input_dir)
     to_check = (
-        QSIPREP_ANAT_REQUIREMENTS if anat_type == "T1w" else QSIPREP_NORMALIZED_ANAT_REQUIREMENTS
+        QSIPOST_ANAT_REQUIREMENTS if anat_type == "T1w" else QSIPOST_NORMALIZED_ANAT_REQUIREMENTS
     )
 
     for requirement in to_check:

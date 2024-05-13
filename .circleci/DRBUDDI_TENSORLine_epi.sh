@@ -24,10 +24,10 @@ TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
 BIDS_INPUT_DIR=${TESTDIR}/data/DSDTI
 export FS_LICENSE=${TESTDIR}/data/license.txt
-QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+QSIPOST_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
 # Do the anatomical run on its own
-${QSIPREP_CMD} \
+${QSIPOST_CMD} \
 	-w ${TEMPDIR} \
 	--sloppy \
 	--anat-modality none \

@@ -56,7 +56,7 @@ Instead of specifying a path to a file you can choose from the following:
 
 These workflows each take considerable processing time, because they output as many versions of
 connectivity as possible. All :ref:`connectivity_atlases`  and all possible weightings are
-included. Each workflow corresponds to a JSON file that can be found in QSIprep's
+included. Each workflow corresponds to a JSON file that can be found in QSIPost's
 `github <https://github.com/PennBBL/qsipost/tree/master/qsipost/data/pipelines>`_. For extra
 information about how to customize these, see :ref:`custom_reconstruction`.
 

@@ -5,7 +5,7 @@ from nipype.interfaces.base import (
     traits,
 )
 
-from qsipost.interfaces.anatomical import QsiprepAnatomicalIngress
+from qsipost.interfaces.anatomical import QSIPostAnatomicalIngress
 from qsipost.interfaces.ingress import QsiReconDWIIngress
 
 # Anatomical (t1w/t2w) slots
@@ -20,7 +20,7 @@ CREATEABLE_ANATOMICAL_OUTPUTS = [
 
 # These come directly from QSIPost outputs. They're aligned to the DWIs in AC-PC
 qsipost_highres_anatomical_ingressed_fields = (
-    QsiprepAnatomicalIngress.output_spec.class_editable_traits()
+    QSIPostAnatomicalIngress.output_spec.class_editable_traits()
 )
 
 # The init_recon_anatomical anatomical workflow can create additional

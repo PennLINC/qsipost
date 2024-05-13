@@ -240,10 +240,10 @@ def write_derivative_description(bids_dir, deriv_dir):
     }
 
     # Keys that can only be set by environment
-    if "QSIPREP_DOCKER_TAG" in os.environ:
-        desc["DockerHubContainerTag"] = os.environ["QSIPREP_DOCKER_TAG"]
-    if "QSIPREP_SINGULARITY_URL" in os.environ:
-        singularity_url = os.environ["QSIPREP_SINGULARITY_URL"]
+    if "QSIPOST_DOCKER_TAG" in os.environ:
+        desc["DockerHubContainerTag"] = os.environ["QSIPOST_DOCKER_TAG"]
+    if "QSIPOST_SINGULARITY_URL" in os.environ:
+        singularity_url = os.environ["QSIPOST_SINGULARITY_URL"]
         desc["SingularityContainerURL"] = singularity_url
         try:
             desc["SingularityContainerMD5"] = _get_shub_version(singularity_url)

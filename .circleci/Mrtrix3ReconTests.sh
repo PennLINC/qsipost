@@ -36,9 +36,9 @@ setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
 BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
-QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+QSIPOST_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
-${QSIPREP_CMD} \
+${QSIPOST_CMD} \
 	 -w ${TEMPDIR} \
 	 --recon-input ${BIDS_INPUT_DIR} \
 	 --sloppy \
@@ -53,9 +53,9 @@ ${QSIPREP_CMD} \
 # TEMPDIR=${TESTDIR}/${TESTNAME}/work
 # OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
 # BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
-# QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+# QSIPOST_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
-# ${QSIPREP_CMD} \
+# ${QSIPOST_CMD} \
 # 	 -w ${TEMPDIR} \
 # 	 --recon-input ${BIDS_INPUT_DIR} \
 # 	 --sloppy \

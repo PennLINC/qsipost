@@ -33,13 +33,13 @@ TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
 BIDS_INPUT_DIR=${TESTDIR}/data/DSDTI
 export FS_LICENSE=${TESTDIR}/data/license.txt
-QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+QSIPOST_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
 # CRITICAL: delete the fieldmap data
 rm -rf data/DSDTI/sub-PNC/fmap
 
 
-${QSIPREP_CMD} \
+${QSIPOST_CMD} \
 	-w ${TEMPDIR} \
      --eddy-config ${EDDY_CFG} \
      --sloppy \

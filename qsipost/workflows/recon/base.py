@@ -119,7 +119,7 @@ def init_single_subject_recon_wf(subject_id):
     workflow = Workflow(name=f"sub-{subject_id}_{spec['name']}")
     workflow.__desc__ = f"""
 Reconstruction was
-performed using *QSIprep* {config.__version__},
+performed using *QSIPost* {config.__version__},
 which is based on *Nipype* {nipype_ver}
 (@nipype1; @nipype2; RRID:SCR_002502).
 

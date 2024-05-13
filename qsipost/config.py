@@ -127,13 +127,13 @@ if not any(
     (
         "+" in __version__,
         __version__.endswith(".dirty"),
-        os.getenv("QSIPREP_DEV", "0").lower() in ("1", "on", "true", "y", "yes"),
+        os.getenv("QSIPOST_DEV", "0").lower() in ("1", "on", "true", "y", "yes"),
     )
 ):
     from ._warnings import logging
 
     os.environ["PYTHONWARNINGS"] = "ignore"
-elif os.getenv("QSIPREP_WARNINGS", "0").lower() in ("1", "on", "true", "y", "yes"):
+elif os.getenv("QSIPOST_WARNINGS", "0").lower() in ("1", "on", "true", "y", "yes"):
     # allow disabling warnings on development versions
     # https://github.com/nipreps/fmriprep/pull/2080#discussion_r409118765
     from ._warnings import logging

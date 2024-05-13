@@ -1,6 +1,6 @@
 .. include:: links.rst
 
-QSIprep: Preprocessing and analysis of q-space images
+QSIPost: Preprocessing and analysis of q-space images
 =======================================================
 
 .. image:: https://img.shields.io/badge/Source%20Code-pennlinc%2Fqsipost-purple

@@ -53,21 +53,21 @@ run_qsipost_cmd () {
   # test that uses
   if [[ "${CIRCLECI}" = "true" ]]; then
     # In circleci we're running from inside the container. call directly
-    QSIPREP_RUN="/opt/conda/envs/qsipost/bin/qsipost ${bids_dir} ${output_dir} participant"
+    QSIPOST_RUN="/opt/conda/envs/qsipost/bin/qsipost ${bids_dir} ${output_dir} participant"
   else
     # Otherwise we're going to use docker from the outside
-    QSIPREP_RUN="qsipost-docker ${GPU_FLAG} ${bids_dir} ${output_dir} participant -e qsipost_DEV 1 -u $(id -u) -i ${IMAGE}"
+    QSIPOST_RUN="qsipost-docker ${GPU_FLAG} ${bids_dir} ${output_dir} participant -e qsipost_DEV 1 -u $(id -u) -i ${IMAGE}"
     CFG=$(printenv NIPYPE_CONFIG)
     if [[ -n "${CFG}" ]]; then
-        QSIPREP_RUN="${QSIPREP_RUN} --config ${CFG}"
+        QSIPOST_RUN="${QSIPOST_RUN} --config ${CFG}"
     fi
 
     if [[ -n "${LOCAL_PATCH}" ]]; then
       #echo "Using qsipost patch: ${LOCAL_PATCH}"
-      QSIPREP_RUN="${QSIPREP_RUN} --patch-qsipost ${LOCAL_PATCH}"
+      QSIPOST_RUN="${QSIPOST_RUN} --patch-qsipost ${LOCAL_PATCH}"
     fi
   fi
-  echo "${QSIPREP_RUN} --nthreads ${NTHREADS} --omp-nthreads ${OMP_NTHREADS}"
+  echo "${QSIPOST_RUN} --nthreads ${NTHREADS} --omp-nthreads ${OMP_NTHREADS}"
 }
 
 

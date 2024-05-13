@@ -39,7 +39,7 @@ LOGGER = logging.getLogger("nipype.interface")
 KNOWN_TEMPLATES = ["MNI152NLin2009cAsym", "infant"]
 
 
-class QsiprepAnatomicalIngressInputSpec(BaseInterfaceInputSpec):
+class QSIPostAnatomicalIngressInputSpec(BaseInterfaceInputSpec):
     recon_input_dir = traits.Directory(
         exists=True, mandatory=True, help="directory containing subject results directories"
     )
@@ -48,7 +48,7 @@ class QsiprepAnatomicalIngressInputSpec(BaseInterfaceInputSpec):
     infant_mode = traits.Bool(mandatory=True)
 
 
-class QsiprepAnatomicalIngressOutputSpec(TraitedSpec):
+class QSIPostAnatomicalIngressOutputSpec(TraitedSpec):
     # sub-1_desc-aparcaseg_dseg.nii.gz
     t1_aparc = File()
     # sub-1_dseg.nii.gz
@@ -75,15 +75,15 @@ class QsiprepAnatomicalIngressOutputSpec(TraitedSpec):
     template_image = File()
 
 
-class QsiprepAnatomicalIngress(SimpleInterface):
+class QSIPostAnatomicalIngress(SimpleInterface):
     """Get only the useful files from a QSIPost anatomical output.
 
     Many of the preprocessed outputs aren't useful for reconstruction
     (mainly anything that has been mapped forward into template space).
     """
 
-    input_spec = QsiprepAnatomicalIngressInputSpec
-    output_spec = QsiprepAnatomicalIngressOutputSpec
+    input_spec = QSIPostAnatomicalIngressInputSpec
+    output_spec = QSIPostAnatomicalIngressOutputSpec
 
     def _run_interface(self, runtime):
         # The path to the output from the qsipost run
@@ -166,13 +166,13 @@ class QsiprepAnatomicalIngress(SimpleInterface):
             self._results[name] = files[0]
 
 
-class UKBAnatomicalIngressInputSpec(QsiprepAnatomicalIngressInputSpec):
+class UKBAnatomicalIngressInputSpec(QSIPostAnatomicalIngressInputSpec):
     recon_input_dir = traits.Directory(
         exists=True, mandatory=True, help="directory containing a single subject's results"
     )
 
 
-class UKBAnatomicalIngress(QsiprepAnatomicalIngress):
+class UKBAnatomicalIngress(QSIPostAnatomicalIngress):
     input_spec = UKBAnatomicalIngressInputSpec
 
     def _run_interface(self, runtime):
