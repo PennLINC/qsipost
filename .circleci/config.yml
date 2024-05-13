@@ -2,19 +2,19 @@ version: 2.1
 
 .dockersetup: &dockersetup
   docker:
-    - image: pennbbl/qsiprep_build:24.4.29
-  working_directory: /src/qsiprep
+    - image: pennbbl/qsipost_build:24.4.29
+  working_directory: /src/qsipost
 
 runinstall: &runinstall
-    name: Install qsiprep
+    name: Install qsipost
     command: |
       VERSION=0+build
       if [[ -n "$CIRCLE_TAG" ]]; then
         VERSION="$CIRCLE_TAG"
       fi
       git checkout $CIRCLE_BRANCH
-      echo "${VERSION}" > /src/qsiprep/qsiprep/VERSION
-      echo "include qsiprep/VERSION" >> /src/qsiprep/MANIFEST.in
+      echo "${VERSION}" > /src/qsipost/qsipost/VERSION
+      echo "include qsipost/VERSION" >> /src/qsipost/MANIFEST.in
       pip install . --progress-bar off
 
       # Precaching fonts, set 'Agg' as default backend for matplotlib
@@ -27,7 +27,7 @@ runinstall: &runinstall
       printf "[execution]\nstop_on_first_crash = true\n" > ${CFG}
       echo "poll_sleep_duration = 0.01" >> ${CFG}
       echo "hash_method = content" >> ${CFG}
-      ln -s /home/qsiprep/.dipy /root/.dipy
+      ln -s /home/qsipost/.dipy /root/.dipy
 
 
 jobs:
@@ -296,7 +296,7 @@ jobs:
       TZ: "/usr/share/zoneinfo/America/New_York"
     docker:
       - image: cimg/base:2020.09
-    working_directory: /tmp/src/qsiprep_build
+    working_directory: /tmp/src/qsipost_build
     steps:
       - checkout
       - setup_remote_docker:
@@ -317,15 +317,15 @@ jobs:
               echo "the command ``git fetch --tags --verbose`` and push"
               echo "them to your fork with ``git push origin --tags``"
             fi
-            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/qsiprep_container/qsiprep_docker.py
+            sed -i -E "s/(__version__ = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" wrapper/qsipost_container/qsipost_docker.py
             sed -i -E "s/(var version = )'[A-Za-z0-9.-]+'/\1'${CIRCLE_TAG:-$THISVERSION}'/" docs/citing.rst
-            sed -i "s/title = {qsiprep}/title = {qsiprep ${CIRCLE_TAG:-$THISVERSION}}/" qsiprep/data/boilerplate.bib
+            sed -i "s/title = {qsipost}/title = {qsipost ${CIRCLE_TAG:-$THISVERSION}}/" qsipost/data/boilerplate.bib
             # Build docker image
             e=1 && for i in {1..5}; do
               docker build \
-                --cache-from=pennbbl/qsiprep \
+                --cache-from=pennbbl/qsipost \
                 --rm=false \
-                -t pennbbl/qsiprep:latest \
+                -t pennbbl/qsipost:latest \
                 --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
                 --build-arg VCS_REF=`git rev-parse --short HEAD` \
                 --build-arg VERSION="${CIRCLE_TAG:-$THISVERSION}" . \
@@ -337,12 +337,12 @@ jobs:
           command: |
             if [[ -n "$DOCKER_PASS" ]]; then
               docker login -u $DOCKER_USER -p $DOCKER_PASS
-              docker tag pennbbl/qsiprep pennbbl/qsiprep:unstable
-              docker push pennbbl/qsiprep:unstable
+              docker tag pennbbl/qsipost pennbbl/qsipost:unstable
+              docker push pennbbl/qsipost:unstable
               if [[ -n "$CIRCLE_TAG" ]]; then
-                docker push pennbbl/qsiprep:latest
-                docker tag pennbbl/qsiprep pennbbl/qsiprep:$CIRCLE_TAG
-                docker push pennbbl/qsiprep:$CIRCLE_TAG
+                docker push pennbbl/qsipost:latest
+                docker tag pennbbl/qsipost pennbbl/qsipost:$CIRCLE_TAG
+                docker push pennbbl/qsipost:$CIRCLE_TAG
               fi
             fi
 

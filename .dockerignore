@@ -11,8 +11,8 @@ build/**/*
 build
 dist/**/*
 dist
-qsiprep.egg-info/**/*
-qsiprep.egg-info
+qsipost.egg-info/**/*
+qsipost.egg-info
 .eggs/**/*
 .eggs
 

@@ -1,4 +1,4 @@
-IMAGE=pennbbl/qsiprep:unstable
+IMAGE=pennbbl/qsipost:unstable
 
 # Set this to be comfortable on the testing machine
 MAX_CPUS=18
@@ -10,12 +10,12 @@ fi
 # Edit these for project-wide testing
 WGET="wget --retry-connrefused --waitretry=5 --read-timeout=20 --timeout=15 -t 0 -q"
 
-# Patch in a local copy of qsiprep?
+# Patch in a local copy of qsipost?
 LOCAL_PATCH=""
-if [[ -d /Users/mcieslak/projects/qsiprep/qsiprep ]]; then
-    LOCAL_PATCH=/Users/mcieslak/projects/qsiprep/qsiprep
-elif [[ -d /home/matt/projects/qsiprep ]]; then
-    LOCAL_PATCH=/home/matt/projects/qsiprep/qsiprep
+if [[ -d /Users/mcieslak/projects/qsipost/qsipost ]]; then
+    LOCAL_PATCH=/Users/mcieslak/projects/qsipost/qsipost
+elif [[ -d /home/matt/projects/qsipost ]]; then
+    LOCAL_PATCH=/home/matt/projects/qsipost/qsipost
 fi
 
 # Determine if we're in a CI test
@@ -46,25 +46,25 @@ which nvidia-smi && GPU_FLAG="--gpus all"
 
 export IN_CI NTHREADS OMP_NTHREADS
 
-run_qsiprep_cmd () {
+run_qsipost_cmd () {
   bids_dir="$1"
   output_dir="$2"
-  # Defines a call to qsiprep that works on circleci OR for a local
+  # Defines a call to qsipost that works on circleci OR for a local
   # test that uses
   if [[ "${CIRCLECI}" = "true" ]]; then
     # In circleci we're running from inside the container. call directly
-    QSIPREP_RUN="/opt/conda/envs/qsiprep/bin/qsiprep ${bids_dir} ${output_dir} participant"
+    QSIPREP_RUN="/opt/conda/envs/qsipost/bin/qsipost ${bids_dir} ${output_dir} participant"
   else
     # Otherwise we're going to use docker from the outside
-    QSIPREP_RUN="qsiprep-docker ${GPU_FLAG} ${bids_dir} ${output_dir} participant -e qsiprep_DEV 1 -u $(id -u) -i ${IMAGE}"
+    QSIPREP_RUN="qsipost-docker ${GPU_FLAG} ${bids_dir} ${output_dir} participant -e qsipost_DEV 1 -u $(id -u) -i ${IMAGE}"
     CFG=$(printenv NIPYPE_CONFIG)
     if [[ -n "${CFG}" ]]; then
         QSIPREP_RUN="${QSIPREP_RUN} --config ${CFG}"
     fi
 
     if [[ -n "${LOCAL_PATCH}" ]]; then
-      #echo "Using qsiprep patch: ${LOCAL_PATCH}"
-      QSIPREP_RUN="${QSIPREP_RUN} --patch-qsiprep ${LOCAL_PATCH}"
+      #echo "Using qsipost patch: ${LOCAL_PATCH}"
+      QSIPREP_RUN="${QSIPREP_RUN} --patch-qsipost ${LOCAL_PATCH}"
     fi
   fi
   echo "${QSIPREP_RUN} --nthreads ${NTHREADS} --omp-nthreads ${OMP_NTHREADS}"
@@ -269,35 +269,35 @@ Contents:
 multishell_output:
 ------------------
 
-Results from running qsiprep on a simulated ABCD (multi-shell) dataset
+Results from running qsipost on a simulated ABCD (multi-shell) dataset
 
 Contents:
 ^^^^^^^^^
 
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_desc-brain_mask.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_desc-preproc_T1w.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_dseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_from-orig_to-T1w_mode-image_xfm.txt
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_from-T1w_to-MNI152NLin2009cAsym_mode-image_xfm.h5
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_label-CSF_probseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_label-GM_probseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_label-WM_probseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_desc-preproc_T1w.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_dseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_label-GM_probseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_label-WM_probseg.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_confounds.tsv
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_b0series.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-brain_mask.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-eddy_cnr.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.b
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.bval
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.bvec
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.nii.gz
- - data/multishell_output/qsiprep/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_dwiref.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_desc-brain_mask.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_desc-preproc_T1w.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_dseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_from-orig_to-T1w_mode-image_xfm.txt
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_from-T1w_to-MNI152NLin2009cAsym_mode-image_xfm.h5
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_label-CSF_probseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_label-GM_probseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_label-WM_probseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_desc-preproc_T1w.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_dseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_label-GM_probseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/anat/sub-ABCD_space-MNI152NLin2009cAsym_label-WM_probseg.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_confounds.tsv
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_b0series.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-brain_mask.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-eddy_cnr.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.b
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.bval
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.bvec
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_desc-preproc_dwi.nii.gz
+ - data/multishell_output/qsipost/sub-ABCD/dwi/sub-ABCD_acq-10per000_space-T1w_dwiref.nii.gz
 
 
 singleshell_output:
@@ -308,41 +308,41 @@ Preprocessed data from a single-shell dataset
 Contents:
 ^^^^^^^^^
 
- - data/singleshell_output/qsiprep/dataset_description.json
- - data/singleshell_output/qsiprep/logs/CITATION.html
- - data/singleshell_output/qsiprep/logs/CITATION.md
- - data/singleshell_output/qsiprep/logs/CITATION.tex
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_desc-brain_mask.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_desc-preproc_T1w.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_dseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_from-orig_to-T1w_mode-image_xfm.txt
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_from-T1w_to-MNI152NLin2009cAsym_mode-image_xfm.h5
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_label-CSF_probseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_label-GM_probseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_label-WM_probseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_desc-preproc_T1w.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_dseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_label-GM_probseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_label-WM_probseg.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_confounds.tsv
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_b0series.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-brain_mask.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-eddy_cnr.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.b
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.bval
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.bvec
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_dwiref.nii.gz
- - data/singleshell_output/qsiprep/sub-PNC/figures/sub-PNC_acq-realistic_carpetplot.svg
- - data/singleshell_output/qsiprep/sub-PNC/figures/sub-PNC_acq-realistic_coreg.svg
- - data/singleshell_output/qsiprep/sub-PNC/figures/sub-PNC_acq-realistic_desc-sdc_b0.svg
- - data/singleshell_output/qsiprep/sub-PNC/figures/sub-PNC_acq-realistic_sampling_scheme.gif
- - data/singleshell_output/qsiprep/sub-PNC/figures/sub-PNC_seg_brainmask.svg
- - data/singleshell_output/qsiprep/sub-PNC/figures/sub-PNC_t1_2_mni.svg
- - data/singleshell_output/qsiprep/sub-PNC.html
+ - data/singleshell_output/qsipost/dataset_description.json
+ - data/singleshell_output/qsipost/logs/CITATION.html
+ - data/singleshell_output/qsipost/logs/CITATION.md
+ - data/singleshell_output/qsipost/logs/CITATION.tex
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_desc-brain_mask.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_desc-preproc_T1w.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_dseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_from-MNI152NLin2009cAsym_to-T1w_mode-image_xfm.h5
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_from-orig_to-T1w_mode-image_xfm.txt
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_from-T1w_to-MNI152NLin2009cAsym_mode-image_xfm.h5
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_label-CSF_probseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_label-GM_probseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_label-WM_probseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_desc-brain_mask.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_desc-preproc_T1w.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_dseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_label-CSF_probseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_label-GM_probseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/anat/sub-PNC_space-MNI152NLin2009cAsym_label-WM_probseg.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_confounds.tsv
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_b0series.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-brain_mask.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-eddy_cnr.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.b
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.bval
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.bvec
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_desc-preproc_dwi.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/dwi/sub-PNC_acq-realistic_space-T1w_dwiref.nii.gz
+ - data/singleshell_output/qsipost/sub-PNC/figures/sub-PNC_acq-realistic_carpetplot.svg
+ - data/singleshell_output/qsipost/sub-PNC/figures/sub-PNC_acq-realistic_coreg.svg
+ - data/singleshell_output/qsipost/sub-PNC/figures/sub-PNC_acq-realistic_desc-sdc_b0.svg
+ - data/singleshell_output/qsipost/sub-PNC/figures/sub-PNC_acq-realistic_sampling_scheme.gif
+ - data/singleshell_output/qsipost/sub-PNC/figures/sub-PNC_seg_brainmask.svg
+ - data/singleshell_output/qsipost/sub-PNC/figures/sub-PNC_t1_2_mni.svg
+ - data/singleshell_output/qsipost/sub-PNC.html
 
 DOC
 

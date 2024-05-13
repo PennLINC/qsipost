@@ -3,7 +3,7 @@
 # emacs: -*- mode: python; py-indent-offset: 4; indent-tabs-mode: nil -*-
 # vi: set ft=python sts=4 ts=4 sw=4 et:
 """
-qsiprep reports builder
+qsipost reports builder
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 
@@ -74,7 +74,7 @@ class Report(object):
         out_dir,
         run_uuid,
         out_filename="report.html",
-        pipeline_type="qsiprep",
+        pipeline_type="qsipost",
     ):
         self.root = path
         self.sections = []
@@ -211,13 +211,13 @@ class Report(object):
             )
             text = "<pre>%s</pre>\n" % text
             text += "<h3>Bibliography</h3>\n"
-            text += "<pre>%s</pre>\n" % Path(pkgrf("qsiprep", "data/boilerplate.bib")).read_text(
+            text += "<pre>%s</pre>\n" % Path(pkgrf("qsipost", "data/boilerplate.bib")).read_text(
                 encoding="UTF-8"
             )
             boilerplate.append((boiler_idx, "LaTeX", text))
             boiler_idx += 1
 
-        searchpath = pkgrf("qsiprep", "/")
+        searchpath = pkgrf("qsipost", "/")
         env = jinja2.Environment(
             loader=jinja2.FileSystemLoader(searchpath=searchpath),
             trim_blocks=True,
@@ -304,7 +304,7 @@ def generate_name_title(filename):
     return name.strip("_"), title
 
 
-def run_reports(reportlets_dir, out_dir, subject_label, run_uuid, report_type="qsiprep"):
+def run_reports(reportlets_dir, out_dir, subject_label, run_uuid, report_type="qsipost"):
     """
     Runs the reports
 
@@ -318,7 +318,7 @@ def run_reports(reportlets_dir, out_dir, subject_label, run_uuid, report_type="q
     >>> tmpdir = TemporaryDirectory()
     >>> os.chdir(tmpdir.name)
     >>> data_dir = copytree(test_data_path, os.path.abspath('work'))
-    >>> os.makedirs('out/qsiprep', exist_ok=True)
+    >>> os.makedirs('out/qsipost', exist_ok=True)
     >>> run_reports(os.path.abspath('work/reportlets'),
     ...             os.path.abspath('out'),
     ...             '01', 'madeoutuuid')
@@ -328,10 +328,10 @@ def run_reports(reportlets_dir, out_dir, subject_label, run_uuid, report_type="q
 
     """
     reportlet_path = str(Path(reportlets_dir) / report_type / ("sub-%s" % subject_label))
-    if report_type == "qsiprep":
-        viz_config = pkgrf("qsiprep", "viz/config.json")
+    if report_type == "qsipost":
+        viz_config = pkgrf("qsipost", "viz/config.json")
     else:
-        viz_config = pkgrf("qsiprep", "viz/recon_config.json")
+        viz_config = pkgrf("qsipost", "viz/recon_config.json")
 
     out_filename = "sub-{}.html".format(subject_label)
     report = Report(
@@ -340,7 +340,7 @@ def run_reports(reportlets_dir, out_dir, subject_label, run_uuid, report_type="q
     return report.generate_report()
 
 
-def generate_reports(subject_list, pipeline_mode="qsiprep"):
+def generate_reports(subject_list, pipeline_mode="qsipost"):
     """
     A wrapper to run_reports on a given ``subject_list``
     """
@@ -376,7 +376,7 @@ def generate_interactive_report_summary(output_dir):
     report_errors = []
     qc_report = {
         "report_type": "dwi_qc_report",
-        "pipeline": "qsiprep",
+        "pipeline": "qsipost",
         "pipeline_version": 0,
         "boilerplate": "",
         "metric_explanation": {

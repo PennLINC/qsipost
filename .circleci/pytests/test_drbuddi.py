@@ -1,3 +1,3 @@
-from qsiprep.interfaces.tortoise import DRBUDDI
+from qsipost.interfaces.tortoise import DRBUDDI
 from pprint import pprint
 

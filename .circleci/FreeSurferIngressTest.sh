@@ -5,7 +5,7 @@ cat << DOC
 Test the FreeSurfer Ingress workflow
 ====================================
 
-Test the case where QSIPrep has processed the anatomical data and an external
+Test the case where QSIPost has processed the anatomical data and an external
 (likely run as part of fmriprep) freesurfer run has happened as well
 
 This tests the following features:
@@ -18,7 +18,7 @@ Inputs:
 -------
 
  - freesurfer SUBJECTS_DIR (data/freesurfer)
- - qsiprep multi shell results with anatomical outputs (data/qsiprep_with_anat)
+ - qsipost multi shell results with anatomical outputs (data/qsipost_with_anat)
 
 DOC
 
@@ -38,9 +38,9 @@ TESTNAME=fs_ingress_test
 # setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/qsiprep_with_anat
+BIDS_INPUT_DIR=${TESTDIR}/data/qsipost_with_anat
 SUBJECTS_DIR=${TESTDIR}/data/freesurfer
-QSIPREP_CMD=$(run_qsiprep_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
 ${QSIPREP_CMD} \
 	 -w ${TEMPDIR} \

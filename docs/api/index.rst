@@ -7,10 +7,10 @@ API
 Preprocessing Workflows
 -------------------------
 
-.. automodule:: qsiprep.workflows.base
-.. automodule:: qsiprep.workflows.anatomical
-.. automodule:: qsiprep.workflows.dwi
-.. automodule:: qsiprep.workflows.fieldmap
+.. automodule:: qsipost.workflows.base
+.. automodule:: qsipost.workflows.anatomical
+.. automodule:: qsipost.workflows.dwi
+.. automodule:: qsipost.workflows.fieldmap
 
 
 .. _recon_workflows:
@@ -18,4 +18,4 @@ Preprocessing Workflows
 Reconstruction Workflows
 --------------------------
 
-..automodule:: qsiprep.workflows.recon
+..automodule:: qsipost.workflows.recon

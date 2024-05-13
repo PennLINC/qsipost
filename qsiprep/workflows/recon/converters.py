@@ -69,10 +69,10 @@ def init_fibgz_to_mif_wf(name="fibgz_to_mif", qsirecon_suffix="", params={}):
     return workflow
 
 
-def init_qsiprep_to_fsl_wf(
-    available_anatomical_data, name="qsiprep_to_fsl", qsirecon_suffix="", params={}
+def init_qsipost_to_fsl_wf(
+    available_anatomical_data, name="qsipost_to_fsl", qsirecon_suffix="", params={}
 ):
-    """Converts QSIPrep outputs (images, bval, bvec) to fsl standard orientation"""
+    """Converts QSIPost outputs (images, bval, bvec) to fsl standard orientation"""
     inputnode = pe.Node(
         niu.IdentityInterface(fields=recon_workflow_input_fields), name="inputnode"
     )

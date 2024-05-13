@@ -16,8 +16,8 @@ This tests the following features:
 Inputs:
 -------
 
- - qsiprep single shell results (data/DSDTI_fmap)
- - qsiprep multi shell results (data/DSDTI_fmap)
+ - qsipost single shell results (data/DSDTI_fmap)
+ - qsipost multi shell results (data/DSDTI_fmap)
 
 DOC
 set +e
@@ -35,10 +35,10 @@ TESTNAME=mrtrix_multishell_msmt_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 -u $(id -u) \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 -u $(id -u) \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \
@@ -56,10 +56,10 @@ TESTNAME=mrtrix_multishell_msmt_noACT_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \
@@ -76,10 +76,10 @@ TESTNAME=reorient_fslstd_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 -u $(id -u) \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 -u $(id -u) \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \
@@ -96,10 +96,10 @@ TESTNAME=amico_noddi_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 -u $(id -u) \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 -u $(id -u) \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \
@@ -116,10 +116,10 @@ TESTNAME=mrtrix_singleshell_ss3t_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/singleshell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/singleshell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 -u $(id -u) \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 -u $(id -u) \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \
@@ -136,10 +136,10 @@ TESTNAME=mrtrix_singleshell_ss3t_noACT_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/singleshell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/singleshell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 -u $(id -u) \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 -u $(id -u) \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \
@@ -157,10 +157,10 @@ TESTNAME=dipy_mapmri_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsiprep
+BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
 
-qsiprep-docker -i pennbbl/qsiprep:latest \
-	-e qsiprep_DEV 1 -u $(id -u) \
+qsipost-docker -i pennbbl/qsipost:latest \
+	-e qsipost_DEV 1 -u $(id -u) \
 	--config ${CFG} ${PATCH} -w ${TEMPDIR} \
 	 ${BIDS_INPUT_DIR} ${OUTPUT_DIR} \
 	 participant \

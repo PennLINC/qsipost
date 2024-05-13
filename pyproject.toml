@@ -3,8 +3,8 @@ requires = ["hatchling", "hatch-vcs", "cython", "numpy"]
 build-backend = "hatchling.build"
 
 [project]
-name = "qsiprep"
-description = "qsiprep builds workflows for preprocessing and reconstructing q-space images"
+name = "qsipost"
+description = "qsipost builds workflows for preprocessing and reconstructing q-space images"
 readme = "long_description.rst"
 authors = [{name = "The PennBBL developers"}]
 classifiers = [
@@ -48,10 +48,10 @@ dependencies = [
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/pennbbl/qsiprep"
-Documentation = "https://www.qsiprep.readthedocs.io"
+Homepage = "https://github.com/pennbbl/qsipost"
+Documentation = "https://www.qsipost.readthedocs.io"
 Paper = "https://doi.org/10.1038/s41592-022-01458-7"
-"Docker Images" = "https://hub.docker.com/r/pennlinc/qsiprep/tags/"
+"Docker Images" = "https://hub.docker.com/r/pennlinc/qsipost/tags/"
 
 [project.optional-dependencies]
 doc = [
@@ -79,14 +79,14 @@ maint = [
 ]
 
 # Aliases
-all = ["qsiprep[doc,maint,tests]"]
+all = ["qsipost[doc,maint,tests]"]
 
 [project.scripts]
-qsiprep = "qsiprep.cli.run:main"
-mif2fib = "qsiprep.cli.convertODFs:mif_to_fib"
-fib2mif = "qsiprep.cli.convertODFs:fib_to_mif"
-qsiprep_group_report = "qsiprep.cli.group_report:aggregate_reports"
-recon_plot = "qsiprep.cli.recon_plot:recon_plot"
+qsipost = "qsipost.cli.run:main"
+mif2fib = "qsipost.cli.convertODFs:mif_to_fib"
+fib2mif = "qsipost.cli.convertODFs:fib_to_mif"
+qsipost_group_report = "qsipost.cli.group_report:aggregate_reports"
+recon_plot = "qsipost.cli.recon_plot:recon_plot"
 
 #
 # Hatch configurations
@@ -99,9 +99,9 @@ allow-direct-references = true
 exclude = [".git_archival.txt"]  # No longer needed in sdist
 
 [tool.hatch.build.targets.wheel]
-packages = ["qsiprep"]
+packages = ["qsipost"]
 exclude = [
-    "qsiprep/tests/data",  # Large test data directory
+    "qsipost/tests/data",  # Large test data directory
 ]
 
 ##  The following two sections configure setuptools_scm in the hatch way
@@ -111,7 +111,7 @@ source = "vcs"
 # raw-options = { version_scheme = "nipreps-calver" }
 
 [tool.hatch.build.hooks.vcs]
-version-file = "qsiprep/_version.py"
+version-file = "qsipost/_version.py"
 
 #
 # Developer tool configurations
@@ -132,9 +132,9 @@ exclude = '''
     | _build
     | build
     | dist
-    | qsiprep/niworkflows
+    | qsipost/niworkflows
   )/
-  | qsiprep/_version.py
+  | qsipost/_version.py
 )
 '''
 
@@ -142,20 +142,20 @@ exclude = '''
 profile = "black"
 multi_line_output = 3
 src_paths = ["isort", "test"]
-known_local_folder = ["qsiprep"]
+known_local_folder = ["qsipost"]
 
 [tool.flake8]
 max-line-length = "99"
 doctests = "False"
 exclude = [
     "*build/",
-    "qsiprep/_version.py",
-    "qsiprep/_warnings.py",
-    "qsiprep/config.py",
-    "qsiprep/data/",
-    "qsiprep/tests/",
-    "qsiprep/niworkflows/",
-    "qsiprep/utils/sentry.py",
+    "qsipost/_version.py",
+    "qsipost/_warnings.py",
+    "qsipost/config.py",
+    "qsipost/data/",
+    "qsipost/tests/",
+    "qsipost/niworkflows/",
+    "qsipost/utils/sentry.py",
 ]
 ignore = ["D107", "E203", "E402", "E722", "W503", "N803", "N806", "N815", "W605"]
 per-file-ignores = [
@@ -169,7 +169,7 @@ omit = [
     "*/tests/*",
     "*/__init__.py",
     "*/conftest.py",
-    "qsiprep/_version.py"
+    "qsipost/_version.py"
 ]
 
 [tool.coverage.report]

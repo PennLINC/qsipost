@@ -1,7 +1,7 @@
 # emacs: -*- mode: python; py-indent-offset: 4; indent-tabs-mode: nil -*-
 # vi: set ft=python sts=4 ts=4 sw=4 et:
 #
-# Changed to run qsiprep/qsirecon
+# Changed to run qsipost/qsirecon
 #
 # Copyright The NiPreps Developers <nipreps@gmail.com>
 #
@@ -42,7 +42,7 @@ def main():
     parse_args()
 
     if "pdb" in config.execution.debug:
-        from qsiprep.utils.debug import setup_exceptionhook
+        from qsipost.utils.debug import setup_exceptionhook
 
         setup_exceptionhook()
         config.nipype.plugin = "Linear"
@@ -80,24 +80,24 @@ def main():
         retval = build_workflow(str(config_file), "auto", {})
 
     exitcode = retval.get("return_code", 0)
-    qsiprep_wf = retval.get("workflow", None)
-    exec_mode = retval.get("exec_mode", "QSIPrep")
+    qsipost_wf = retval.get("workflow", None)
+    exec_mode = retval.get("exec_mode", "QSIPost")
     output_dir = (
-        config.execution.qsiprep_dir if exec_mode == "QSIPrep" else config.execution.output_dir
+        config.execution.qsipost_dir if exec_mode == "QSIPost" else config.execution.output_dir
     )
 
     # CRITICAL Load the config from the file. This is necessary because the ``build_workflow``
     # function executed constrained in a process may change the config (and thus the global
-    # state of QSIPrep).
+    # state of QSIPost).
     config.load(config_file)
 
     if config.execution.reports_only:
         sys.exit(int(exitcode > 0))
 
-    if qsiprep_wf and config.execution.write_graph:
-        qsiprep_wf.write_graph(graph2use="colored", format="svg", simple_form=True)
+    if qsipost_wf and config.execution.write_graph:
+        qsipost_wf.write_graph(graph2use="colored", format="svg", simple_form=True)
 
-    exitcode = exitcode or (qsiprep_wf is None) * EX_SOFTWARE
+    exitcode = exitcode or (qsipost_wf is None) * EX_SOFTWARE
     if exitcode != 0:
         sys.exit(exitcode)
 
@@ -105,7 +105,7 @@ def main():
     with Manager() as mgr:
         from .workflow import build_boilerplate
 
-        p = Process(target=build_boilerplate, args=(str(config_file), qsiprep_wf))
+        p = Process(target=build_boilerplate, args=(str(config_file), qsipost_wf))
         p.start()
         p.join()
 
@@ -120,8 +120,8 @@ def main():
         with sentry_sdk.configure_scope() as scope:
             scope.set_tag("run_uuid", config.execution.run_uuid)
             scope.set_tag("npart", len(config.execution.participant_label))
-        sentry_sdk.add_breadcrumb(message="QSIPrep started", level="info")
-        sentry_sdk.capture_message("QSIPrep started", level="info")
+        sentry_sdk.add_breadcrumb(message="QSIPost started", level="info")
+        sentry_sdk.capture_message("QSIPost started", level="info")
 
     config.loggers.workflow.log(
         15,
@@ -130,7 +130,7 @@ def main():
     config.loggers.workflow.log(25, f"{exec_mode} started!")
     errno = 1  # Default is error exit unless otherwise set
     try:
-        qsiprep_wf.run(**config.nipype.get_plugin())
+        qsipost_wf.run(**config.nipype.get_plugin())
     except Exception as e:
         if not config.execution.notrack:
             from ..utils.sentry import process_crashfile
@@ -148,9 +148,9 @@ def main():
         config.loggers.workflow.critical("%s failed: %s", exec_mode, e)
         raise
     else:
-        config.loggers.workflow.log(25, "QSIPrep finished successfully!")
+        config.loggers.workflow.log(25, "QSIPost finished successfully!")
         if sentry_sdk is not None:
-            success_message = "QSIPrep finished without errors"
+            success_message = "QSIPost finished without errors"
             sentry_sdk.add_breadcrumb(message=success_message, level="info")
             sentry_sdk.capture_message(success_message, level="info")
 
@@ -160,14 +160,14 @@ def main():
             if config.environment.exec_env in (
                 "singularity",
                 "docker",
-                "qsiprep-docker",
+                "qsipost-docker",
             ):
                 boiler_file = Path("<OUTPUT_PATH>") / boiler_file.relative_to(
                     config.execution.output_dir
                 )
             config.loggers.workflow.log(
                 25,
-                "Works derived from this QSIPrep execution should include the "
+                "Works derived from this QSIPost execution should include the "
                 f"boilerplate text found in {boiler_file}.",
             )
 
@@ -187,10 +187,10 @@ def main():
         )
         write_derivative_description(
             config.execution.bids_dir,
-            config.execution.qsiprep_dir,
+            config.execution.qsipost_dir,
             # dataset_links=config.execution.dataset_links,
         )
-        write_bidsignore(config.execution.qsiprep_dir)
+        write_bidsignore(config.execution.qsipost_dir)
 
         if failed_reports:
             print(failed_reports)
@@ -213,7 +213,7 @@ def main():
                 sys.exit(int(errno + failed_reports) > 0)
 
     # POST-PREP RECON
-    del qsiprep_wf
+    del qsipost_wf
     # CRITICAL Call build_workflow(config_file, retval) in a subprocess.
     # Because Python on Linux does not ever free virtual memory (VM), running the
     # workflow construction jailed within a process preempts excessive VM buildup.
@@ -280,7 +280,7 @@ def main():
             from ..utils.sentry import process_crashfile
 
             crashfolders = [
-                config.execution.qsiprep_dir / f"sub-{s}" / "log" / config.execution.run_uuid
+                config.execution.qsipost_dir / f"sub-{s}" / "log" / config.execution.run_uuid
                 for s in config.execution.participant_label
             ]
             for crashfolder in crashfolders:
@@ -289,10 +289,10 @@ def main():
 
             if sentry_sdk is not None and "Workflow did not execute cleanly" not in str(e):
                 sentry_sdk.capture_exception(e)
-        config.loggers.workflow.critical("QSIPrep failed: %s", e)
+        config.loggers.workflow.critical("QSIPost failed: %s", e)
         raise
     else:
-        config.loggers.workflow.log(25, "QSIPrep finished successfully!")
+        config.loggers.workflow.log(25, "QSIPost finished successfully!")
         if sentry_sdk is not None:
             success_message = "QSIPostRecon finished without errors"
             sentry_sdk.add_breadcrumb(message=success_message, level="info")
@@ -304,7 +304,7 @@ def main():
             if config.environment.exec_env in (
                 "singularity",
                 "docker",
-                "qsiprep-docker",
+                "qsipost-docker",
             ):
                 boiler_file = Path("<OUTPUT_PATH>") / boiler_file.relative_to(
                     config.execution.output_dir
@@ -331,7 +331,7 @@ def main():
         )
         write_derivative_description(
             config.execution.bids_dir,
-            config.execution.qsiprep_dir,
+            config.execution.qsipost_dir,
             # dataset_links=config.execution.dataset_links,
         )
         write_bidsignore(config.execution.qsirecon)

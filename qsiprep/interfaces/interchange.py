@@ -5,21 +5,21 @@ from nipype.interfaces.base import (
     traits,
 )
 
-from qsiprep.interfaces.anatomical import QsiprepAnatomicalIngress
-from qsiprep.interfaces.ingress import QsiReconDWIIngress
+from qsipost.interfaces.anatomical import QsiprepAnatomicalIngress
+from qsipost.interfaces.ingress import QsiReconDWIIngress
 
 # Anatomical (t1w/t2w) slots
 FS_FILES_TO_REGISTER = ["brain", "aseg"]
 CREATEABLE_ANATOMICAL_OUTPUTS = [
     "fs_5tt_hsvs",
-    "qsiprep_5tt_hsvs",
-    "qsiprep_5tt_fast",
-    "fs_to_qsiprep_transform_itk",
-    "fs_to_qsiprep_transform_mrtrix",
+    "qsipost_5tt_hsvs",
+    "qsipost_5tt_fast",
+    "fs_to_qsipost_transform_itk",
+    "fs_to_qsipost_transform_mrtrix",
 ]
 
-# These come directly from QSIPrep outputs. They're aligned to the DWIs in AC-PC
-qsiprep_highres_anatomical_ingressed_fields = (
+# These come directly from QSIPost outputs. They're aligned to the DWIs in AC-PC
+qsipost_highres_anatomical_ingressed_fields = (
     QsiprepAnatomicalIngress.output_spec.class_editable_traits()
 )
 
@@ -27,13 +27,13 @@ qsiprep_highres_anatomical_ingressed_fields = (
 # anatomical files (segmentations/masks/etc) that can be used downstream.
 # These are **independent** of the DWI data and handled separately
 anatomical_workflow_outputs = (
-    qsiprep_highres_anatomical_ingressed_fields
+    qsipost_highres_anatomical_ingressed_fields
     + FS_FILES_TO_REGISTER
     + CREATEABLE_ANATOMICAL_OUTPUTS
 )
 
-# These are read directly from QSIPrep's dwi results.
-qsiprep_output_names = QsiReconDWIIngress().output_spec.class_editable_traits()
+# These are read directly from QSIPost's dwi results.
+qsipost_output_names = QsiReconDWIIngress().output_spec.class_editable_traits()
 
 # dMRI + registered anatomical fields
 recon_workflow_anatomical_input_fields = anatomical_workflow_outputs + [
@@ -45,14 +45,14 @@ recon_workflow_anatomical_input_fields = anatomical_workflow_outputs + [
 ]
 
 # Check that no conflicts have been introduced
-overlapping_names = set(qsiprep_output_names).intersection(recon_workflow_anatomical_input_fields)
+overlapping_names = set(qsipost_output_names).intersection(recon_workflow_anatomical_input_fields)
 if overlapping_names:
     raise Exception(
         "Someone has added overlapping outputs between the anatomical "
         "and dwi inputs: " + " ".join(overlapping_names)
     )
 
-recon_workflow_input_fields = qsiprep_output_names + recon_workflow_anatomical_input_fields
+recon_workflow_input_fields = qsipost_output_names + recon_workflow_anatomical_input_fields
 default_input_set = set(recon_workflow_input_fields)
 default_connections = [(trait, trait) for trait in recon_workflow_input_fields]
 

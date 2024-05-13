@@ -14,9 +14,9 @@ import nipype.interfaces.utility as niu
 import nipype.pipeline.engine as pe
 
 from ...interfaces.interchange import recon_workflow_input_fields
-from qsiprep.interfaces import ConformDwi
-from qsiprep.interfaces.gradients import RemoveDuplicates
-from qsiprep.interfaces.mrtrix import MRTrixGradientTable
+from qsipost.interfaces import ConformDwi
+from qsipost.interfaces.gradients import RemoveDuplicates
+from qsipost.interfaces.mrtrix import MRTrixGradientTable
 
 LOGGER = logging.getLogger("nipype.workflow")
 

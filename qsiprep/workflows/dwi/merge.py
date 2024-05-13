@@ -53,7 +53,7 @@ def init_merge_and_denoise_wf(
         :graph2use: orig
         :simple_form: yes
 
-        from qsiprep.workflows.dwi import init_merge_and_denoise_wf
+        from qsipost.workflows.dwi import init_merge_and_denoise_wf
         wf = init_merge_and_dwnoise_wf(
             ['/path/to/dwi/sub-1_dwi.nii.gz'],
             source_file='/data/sub-1/dwi/sub-1_dwi.nii.gz',

@@ -74,7 +74,7 @@ estimate distortion. Previously, the most-denoised version of each image was use
 TOPUP. To disable this change and return to the previous behavior, use the
 `--denoised-image-sdc` flag.
 
-Note, **this is a change in the default behavior of QSIPrep!!**
+Note, **this is a change in the default behavior of QSIPost!!**
 
 *Upgrades*
 
@@ -102,7 +102,7 @@ Fixes a naming error in the schaefer 400 atlas #428
 ========================
 
 Major additions to the reconstruction workflows! Most notably PyAFQ is available
-as a reconstruction workflow. The default atlases included in QSIPrep have been
+as a reconstruction workflow. The default atlases included in QSIPost have been
 updated to include subcortical regions if they weren't already present in the
 original atlas.
 
@@ -140,7 +140,7 @@ with the reports still enabled, so you know that your ODFs are correctly oriente
 **WARNING** There is an bug in the connectome pipelines that makes the connectivity
 matrices unreliable. Do not use this version for connectome estimation.
 
-A lot of changes in QSIPrep. The big-picture changes are
+A lot of changes in QSIPost. The big-picture changes are
 
  1. The build system was redone so a multistage build is used in a
     different repository (https://github.com/PennLINC/qsiprep_build).
@@ -148,7 +148,7 @@ A lot of changes in QSIPrep. The big-picture changes are
  2. The way anatomical masks are handled in reconstruction workflows
     has been changed so that FreeSurfer data can be incorporated.
  3. FAST-based anatomically-constrained tractography is now deprecated in
-    QSIPrep. If you're going to use anatomical constraints, they should be
+    QSIPost. If you're going to use anatomical constraints, they should be
     very accurate. The hybrid surface-volume segmentation (HSVS) is
     *amazing* and should be considered the default way to use the
     MRtrix3/3Tissue workflows. The
@@ -162,7 +162,7 @@ A lot of changes in QSIPrep. The big-picture changes are
  5. FSL is updated to 6.0.5.1!
 
 Since these are a lot of changes, please be vigilant and check your results!
-The QSIPrep preprocessing workflows have not changed with this release, but
+The QSIPost preprocessing workflows have not changed with this release, but
 the dependencies have been upgraded for almost everything.
 
  * Update FSL to 6.0.5.1 (#334)
@@ -235,7 +235,7 @@ appreciated!
 Adds options for processing infant dMRI data. Also enables running without a T1w
 image.
 
- * Adds ``--dwi-only`` and ``--infant`` options to QSIPrep. (#177)
+ * Adds ``--dwi-only`` and ``--infant`` options to QSIPost. (#177)
 
 
 0.11.0 (August 12, 2020)
@@ -287,7 +287,7 @@ are merged before motion correction by default (disabled by ``--separate-all-dwi
 
 0.6.7 (January 9 2020)
 ======================
-This release adds some rather big updates to QSIPrep.
+This release adds some rather big updates to QSIPost.
  * FSL is updated to version 6.0.3
  * CUDA v9.1 support is added to the image (works with GPUS in Docker and Singularity)
  * A new robust b=0 masking algorith is introduced.

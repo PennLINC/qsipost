@@ -1,7 +1,7 @@
 # emacs: -*- mode: python; py-indent-offset: 4; indent-tabs-mode: nil -*-
 # vi: set ft=python sts=4 ts=4 sw=4 et:
 #
-# Edited from fMRIPrep to represent QSIPrep arguments
+# Edited from fMRIPrep to represent QSIPost arguments
 #
 # Copyright The NiPreps Developers <nipreps@gmail.com>
 #
@@ -23,23 +23,23 @@
 #     https://www.nipreps.org/community/licensing/
 #
 r"""
-A Python module to maintain unique, run-wide *QSIPrep* settings.
+A Python module to maintain unique, run-wide *QSIPost* settings.
 
 This module implements the memory structures to keep a consistent, singleton config.
 Settings are passed across processes via filesystem, and a copy of the settings for
 each run and subject is left under
-``<qsiprep_dir>/sub-<participant_id>/log/<run_unique_id>/qsiprep.toml``.
+``<qsipost_dir>/sub-<participant_id>/log/<run_unique_id>/qsipost.toml``.
 Settings are stored using :abbr:`ToML (Tom's Markup Language)`.
-The module has a :py:func:`~qsiprep.config.to_filename` function to allow writing out
+The module has a :py:func:`~qsipost.config.to_filename` function to allow writing out
 the settings to hard disk in *ToML* format, which looks like:
 
-.. literalinclude:: ../qsiprep/data/tests/config.toml
+.. literalinclude:: ../qsipost/data/tests/config.toml
    :language: toml
-   :name: qsiprep.toml
-   :caption: **Example file representation of QSIPrep settings**.
+   :name: qsipost.toml
+   :caption: **Example file representation of QSIPost settings**.
 
 This config file is used to pass the settings across processes,
-using the :py:func:`~qsiprep.config.load` function.
+using the :py:func:`~qsipost.config.load` function.
 
 Configuration sections
 ----------------------
@@ -59,8 +59,8 @@ graph is built across processes.
 
 .. code-block:: Python
 
-    from qsiprep import config
-    config_file = config.execution.work_dir / '.qsiprep.toml'
+    from qsipost import config
+    config_file = config.execution.work_dir / '.qsipost.toml'
     config.to_filename(config_file)
     # Call build_workflow(config_file, retval) in a subprocess
     with Manager() as mgr:
@@ -100,7 +100,7 @@ _disable_et = bool(os.getenv("NO_ET") is not None or os.getenv("NIPYPE_NO_ET") i
 os.environ["NIPYPE_NO_ET"] = "1"
 os.environ["NO_ET"] = "1"
 
-CONFIG_FILENAME = "qsiprep.toml"
+CONFIG_FILENAME = "qsipost.toml"
 
 try:
     set_start_method("forkserver")
@@ -166,7 +166,7 @@ if os.getenv("IS_DOCKER_8395080871"):
     _cgroup = Path("/proc/1/cgroup")
     if _cgroup.exists() and "docker" in _cgroup.read_text():
         _docker_ver = os.getenv("DOCKER_VERSION_8395080871")
-        _exec_env = "qsiprep-docker" if _docker_ver else "docker"
+        _exec_env = "qsipost-docker" if _docker_ver else "docker"
     del _cgroup
 
 _fs_license = os.getenv("FS_LICENSE")
@@ -274,7 +274,7 @@ class environment(_Config):
     Read-only options regarding the platform and environment.
 
     Crawls runtime descriptive settings (e.g., default FreeSurfer license,
-    execution environment, nipype and *QSIPrep* versions, etc.).
+    execution environment, nipype and *QSIPost* versions, etc.).
     The ``environment`` section is not loaded in from file,
     only written out when settings are exported.
     This config section is useful when reporting issues,
@@ -415,7 +415,7 @@ class execution(_Config):
     # md_only_boilerplate = False
     # """Do not convert boilerplate from MarkDown to LaTex and HTML."""
     notrack = False
-    """Do not collect telemetry information for *QSIPrep*."""
+    """Do not collect telemetry information for *QSIPost*."""
     output_dir = None
     """Folder where derivatives will be stored."""
     output_layout = None
@@ -431,12 +431,12 @@ class execution(_Config):
     """Disable ODF recon reports."""
     participant_label = None
     """List of participant identifiers that are to be preprocessed."""
-    qsiprep_dir = None
-    """Root of QSIPrep BIDS Derivatives dataset. Depends on output_layout."""
+    qsipost_dir = None
+    """Root of QSIPost BIDS Derivatives dataset. Depends on output_layout."""
     qsirecon_dir = None
     """Root of QSIRecon BIDS Derivatives dataset."""
     recon_input = None
-    """Directory containing QSIPrep derivatives to run through recon workflows."""
+    """Directory containing QSIPost derivatives to run through recon workflows."""
     recon_only = False
     """Run only recon workflows."""
     reportlets_dir = None
@@ -469,7 +469,7 @@ class execution(_Config):
         "layout",
         "log_dir",
         "output_dir",
-        "qsiprep_dir",
+        "qsipost_dir",
         "qsirecon_dir",
         "recon_input",
         "reportlets_dir",
@@ -577,7 +577,7 @@ class workflow(_Config):
     b0_threshold = None
     """Any value in the .bval file less than this will be considered a b=0 image."""
     b0_motion_corr_to = None
-    """Perform SHORELine's initial b=0-based registration to first volume? 
+    """Perform SHORELine's initial b=0-based registration to first volume?
     Or make a template? Either 'iterative' or 'first'"""
     b0_to_t1w_transform = None
     """Transformation model for intramodal registration."""
@@ -614,7 +614,7 @@ class workflow(_Config):
     hmc_transform = None
     """Transformation to be used in SHORELine."""
     ignore = None
-    """Ignore particular steps for *QSIPrep*."""
+    """Ignore particular steps for *QSIPost*."""
     infant = False
     """Configure pipelines specifically for infant brains"""
     intramodal_template_iters = None
@@ -757,7 +757,7 @@ def load(filename, skip=None, init=True):
     Arguments
     ---------
     filename : :py:class:`os.PathLike`
-        TOML file containing QSIPrep configuration.
+        TOML file containing QSIPost configuration.
     skip : dict or None
         Sets of values to ignore during load, keyed by section name
     init : `bool` or :py:class:`~collections.abc.Container`

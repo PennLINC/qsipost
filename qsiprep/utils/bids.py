@@ -122,7 +122,7 @@ def collect_participants(bids_dir, participant_label=None, strict=False, bids_va
     >>> collect_participants('ds114', participant_label=['02', '14'],
     ...                      strict=True)  # doctest: +IGNORE_EXCEPTION_DETAIL
     Traceback (most recent call last):
-    qsiprep.utils.bids.BIDSError:
+    qsipost.utils.bids.BIDSError:
     ...
 
 
@@ -213,26 +213,26 @@ def collect_data(bids_dir, participant_label, filters=None, bids_validate=True):
 
 
 def write_derivative_description(bids_dir, deriv_dir):
-    from qsiprep import __version__
+    from qsipost import __version__
 
-    DOWNLOAD_URL = f"https://github.com/PennLINC/qsiprep/archive/{__version__}.tar.gz"
+    DOWNLOAD_URL = f"https://github.com/PennLINC/qsipost/archive/{__version__}.tar.gz"
 
     desc = {
-        "Name": "qsiprep output",
+        "Name": "qsipost output",
         "BIDSVersion": "1.1.1",
         "PipelineDescription": {
-            "Name": "qsiprep",
+            "Name": "qsipost",
             "Version": __version__,
             "CodeURL": DOWNLOAD_URL,
         },
         "GeneratedBy": [
             {
-                "Name": "qsiprep",
+                "Name": "qsipost",
                 "Version": __version__,
                 "CodeURL": DOWNLOAD_URL,
             }
         ],
-        "CodeURL": "https://github.com/pennbbl/qsiprep",
+        "CodeURL": "https://github.com/pennbbl/qsipost",
         "HowToAcknowledge": "Please cite our paper "
         "(https://www.nature.com/articles/s41592-021-01185-5#citeas), and "
         "include the generated citation boilerplate within the Methods "
@@ -286,7 +286,7 @@ def write_bidsignore(deriv_dir):
 
 
 def validate_input_dir(exec_env, bids_dir, participant_label):
-    # Ignore issues and warnings that should not influence qsiprep
+    # Ignore issues and warnings that should not influence qsipost
     import subprocess
     import tempfile
 

@@ -5,7 +5,7 @@ cat << DOC
 AllFieldmaps test
 =================
 
-Instead of running full workflows, this test checks that workflows can 
+Instead of running full workflows, this test checks that workflows can
 be built for all sorts of fieldmap configurations.
 
 This tests the following features:
@@ -35,7 +35,7 @@ setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
 BIDS_INPUT_DIR=${TESTDIR}/data/fmaptests/DSDTI_fmap
-QSIPREP_CMD=$(run_qsiprep_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
 ${QSIPREP_CMD} \
 	 -w ${TEMPDIR} \
@@ -49,7 +49,7 @@ setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
 BIDS_INPUT_DIR=${TESTDIR}/data/fmaptests/DSCSDSI_fmap
-QSIPREP_CMD=$(run_qsiprep_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
 # Test blip-up blip-down shelled series (TOPUP/eddy)
 ${QSIPREP_CMD} \

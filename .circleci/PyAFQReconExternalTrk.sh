@@ -13,7 +13,7 @@ This tests the following features:
 Inputs:
 -------
 
- - qsiprep multi shell results (data/DSDTI_fmap)
+ - qsipost multi shell results (data/DSDTI_fmap)
 
 DOC
 set +e
@@ -30,8 +30,8 @@ TESTNAME=mrtrix_multishell_msmt_pyafq_tractometry_test
 setup_dir ${TESTDIR}/${TESTNAME}
 TEMPDIR=${TESTDIR}/${TESTNAME}/work
 OUTPUT_DIR=${TESTDIR}/${TESTNAME}/derivatives
-BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsiprep
-QSIPREP_CMD=$(run_qsiprep_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
+BIDS_INPUT_DIR=${TESTDIR}/data/multishell_output/qsipost
+QSIPREP_CMD=$(run_qsipost_cmd ${BIDS_INPUT_DIR} ${OUTPUT_DIR})
 
 ${QSIPREP_CMD}  \
 	 -w ${TEMPDIR} \

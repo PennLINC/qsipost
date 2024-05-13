@@ -5,7 +5,7 @@
 T1-weighted Conformation
 ------------------------
 
-.. autoclass:: qsiprep.interfaces.images.Conform
+.. autoclass:: qsipost.interfaces.images.Conform
     :members:
     :undoc-members:
     :show-inheritance:

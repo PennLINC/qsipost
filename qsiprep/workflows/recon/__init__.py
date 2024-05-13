@@ -5,14 +5,14 @@
 Reconstruction pipeline nodes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. automodule:: qsiprep.workflows.recon.build_workflow
-.. automodule:: qsiprep.workflows.recon.base
-.. automodule:: qsiprep.workflows.recon.converters
-.. automodule:: qsiprep.workflows.recon.dipy
-.. automodule:: qsiprep.workflows.recon.dsi_studio
-.. automodule:: qsiprep.workflows.recon.mrtrix
-.. automodule:: qsiprep.workflows.recon.dynamics
-.. automodule:: qsiprep.workflows.recon.utils
+.. automodule:: qsipost.workflows.recon.build_workflow
+.. automodule:: qsipost.workflows.recon.base
+.. automodule:: qsipost.workflows.recon.converters
+.. automodule:: qsipost.workflows.recon.dipy
+.. automodule:: qsipost.workflows.recon.dsi_studio
+.. automodule:: qsipost.workflows.recon.mrtrix
+.. automodule:: qsipost.workflows.recon.dynamics
+.. automodule:: qsipost.workflows.recon.utils
 
 """
 

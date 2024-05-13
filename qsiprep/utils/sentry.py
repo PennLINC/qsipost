@@ -77,8 +77,8 @@ def start_ping(run_uuid, npart):
         if run_uuid:
             scope.set_tag("run_uuid", run_uuid)
         scope.set_tag("npart", npart)
-    sentry_sdk.add_breadcrumb(message="QSIPrep started", level="info")
-    sentry_sdk.capture_message("QSIPrep started", level="info")
+    sentry_sdk.add_breadcrumb(message="QSIPost started", level="info")
+    sentry_sdk.capture_message("QSIPost started", level="info")
 
 
 def sentry_setup():

@@ -8,7 +8,7 @@
       "name": "dipy_dki",
       "software": "Dipy",
       "action": "DKI_reconstruction",
-      "input": "qsiprep",
+      "input": "qsipost",
       "qsirecon_suffix": "DIPYDKI",
       "parameters": {
         "write_mif": false,
@@ -20,7 +20,7 @@
       "software": "TORTOISE",
       "action": "estimate",
       "qsirecon_suffix": "TORTOISE_model-MAPMRI",
-      "input": "qsiprep",
+      "input": "qsipost",
       "parameters": {
         "estimate_tensor_separately": true,
         "big_delta": null,
@@ -37,7 +37,7 @@
       "software": "TORTOISE",
       "action": "estimate",
       "qsirecon_suffix": "TORTOISE_model-tensor",
-      "input": "qsiprep",
+      "input": "qsipost",
       "parameters": {
         "estimate_tensor_separately": true,
         "big_delta": null,
@@ -51,7 +51,7 @@
       "name": "fit_noddi",
       "action": "fit_noddi",
       "software": "AMICO",
-      "input": "qsiprep",
+      "input": "qsipost",
       "qsirecon_suffix": "NODDI",
       "parameters": {
         "isExvivo": false,
@@ -63,7 +63,7 @@
       "name": "dsistudio_gqi",
       "software": "DSI Studio",
       "action": "reconstruction",
-      "input": "qsiprep",
+      "input": "qsipost",
       "qsirecon_suffix": "DSIStudio",
       "parameters": {
         "method": "gqi"
@@ -91,26 +91,26 @@
     },
     {
       "name": "bundle_means",
-      "software": "qsiprep",
+      "software": "qsipost",
       "action": "bundle_map",
       "input": "autotrackgqi",
       "scalars_from": [
-        "gqi_scalars", 
-        "dipy_dki", 
-        "fit_noddi", 
+        "gqi_scalars",
+        "dipy_dki",
+        "fit_noddi",
         "tortoise_fullshell_tensor",
         "tortoise_dtmapmri"
       ]
     },
     {
       "name": "template_map",
-      "software": "qsiprep",
+      "software": "qsipost",
       "action": "template_map",
-      "input": "qsiprep",
+      "input": "qsipost",
       "scalars_from": [
-        "gqi_scalars", 
-        "dipy_dki", 
-        "fit_noddi", 
+        "gqi_scalars",
+        "dipy_dki",
+        "fit_noddi",
         "tortoise_fullshell_tensor",
         "tortoise_dtmapmri"
       ],

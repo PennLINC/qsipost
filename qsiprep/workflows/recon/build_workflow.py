@@ -5,7 +5,7 @@ from ... import config
 from ...engine import Workflow
 from ...interfaces.interchange import default_input_set, recon_workflow_input_fields
 from .amico import init_amico_noddi_fit_wf
-from .converters import init_mif_to_fibgz_wf, init_qsiprep_to_fsl_wf
+from .converters import init_mif_to_fibgz_wf, init_qsipost_to_fsl_wf
 from .dipy import (
     init_dipy_brainsuite_shore_recon_wf,
     init_dipy_dki_recon_wf,
@@ -89,8 +89,8 @@ def init_dwi_recon_workflow(
         else:
             workflow.connect(node, "outputnode.recon_scalars",
                              scalar_gatherer, f"in{node_num}")  # fmt:skip
-        if node_spec.get("input", "qsiprep") == "qsiprep":
-            # directly connect all the qsiprep outputs to every node
+        if node_spec.get("input", "qsipost") == "qsipost":
+            # directly connect all the qsipost outputs to every node
             workflow.connect([
                 (inputnode, node,
                  _as_connections(recon_workflow_input_fields, dest_prefix='inputnode.'))
@@ -107,17 +107,17 @@ def init_dwi_recon_workflow(
             downstream_inputs = set(downstream_inputnode.outputs.get().keys())
 
             connect_from_upstream = upstream_outputs.intersection(downstream_inputs)
-            connect_from_qsiprep = default_input_set - connect_from_upstream
+            connect_from_qsipost = default_input_set - connect_from_upstream
 
             config.loggers.workflow.debug(
-                "connecting %s from %s to %s", connect_from_qsiprep, inputnode, node
+                "connecting %s from %s to %s", connect_from_qsipost, inputnode, node
             )
             workflow.connect([
                 (
                     inputnode,
                     node,
                     _as_connections(
-                        connect_from_qsiprep - set(("mapping_metadata",)),
+                        connect_from_qsipost - set(("mapping_metadata",)),
                         dest_prefix='inputnode.'))
             ])  # fmt:skip
             _check_repeats(workflow.list_node_names())
@@ -166,7 +166,7 @@ def init_dwi_recon_workflow(
 
 def workflow_from_spec(available_anatomical_data, node_spec):
     """Build a nipype workflow based on a json file."""
-    software = node_spec.get("software", "qsiprep")
+    software = node_spec.get("software", "qsipost")
     qsirecon_suffix = node_spec.get("qsirecon_suffix", "")
     node_name = node_spec.get("name", None)
     parameters = node_spec.get("parameters", {})
@@ -240,7 +240,7 @@ def workflow_from_spec(available_anatomical_data, node_spec):
         if node_spec["action"] == "estimate":
             return init_tortoise_estimator_wf(**kwargs)
 
-    # qsiprep operations
+    # qsipost operations
     else:
         if node_spec["action"] == "discard_repeated_samples":
             return init_discard_repeated_samples_wf(**kwargs)
@@ -249,7 +249,7 @@ def workflow_from_spec(available_anatomical_data, node_spec):
         if node_spec["action"] == "mif_to_fib":
             return init_mif_to_fibgz_wf(**kwargs)
         if node_spec["action"] == "reorient_fslstd":
-            return init_qsiprep_to_fsl_wf(**kwargs)
+            return init_qsipost_to_fsl_wf(**kwargs)
         if node_spec["action"] == "steinhardt_order_parameters":
             return init_steinhardt_order_param_wf(**kwargs)
         if node_spec["action"] == "bundle_map":
