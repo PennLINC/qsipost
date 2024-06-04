@@ -60,7 +60,7 @@ def init_qsipost_wf():
         # or if the call is doing preproc+recon
         to_recon_list = config.execution.participant_label
     elif config.workflow.recon_input_pipeline == "ukb":
-        from ...utils.ingress import collect_ukb_participants, create_ukb_layout
+        from qsipost.utils.ingress import collect_ukb_participants, create_ukb_layout
 
         # The ukb input will always be specified as the bids input - we can't preproc it first
         ukb_layout = create_ukb_layout(config.execution.bids_dir)
@@ -99,19 +99,19 @@ def init_single_subject_recon_wf(subject_id):
             Single subject label
 
     """
-    from ..interfaces.ingress import QsiReconDWIIngress, UKBioBankDWIIngress
-    from ..interfaces.interchange import (
+    from qsipost.interfaces.ingress import QsiReconDWIIngress, UKBioBankDWIIngress
+    from qsipost.interfaces.interchange import (
         ReconWorkflowInputs,
         anatomical_workflow_outputs,
         qsipost_output_names,
         recon_workflow_anatomical_input_fields,
         recon_workflow_input_fields,
     )
-    from recon.anatomical import (
+    from qsipost.workflows.recon.anatomical import (
         init_dwi_recon_anatomical_workflow,
         init_highres_recon_anatomical_wf,
     )
-    from recon.build_workflow import init_dwi_recon_workflow
+    from qsipost.workflows.recon.build_workflow import init_dwi_recon_workflow
 
     spec = _load_recon_spec()
     dwi_recon_inputs = _get_iterable_dwi_inputs(subject_id)
